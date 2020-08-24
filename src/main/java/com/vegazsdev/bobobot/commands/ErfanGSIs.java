@@ -5,11 +5,8 @@ import com.vegazsdev.bobobot.core.Command;
 import com.vegazsdev.bobobot.db.PrefObj;
 import com.vegazsdev.bobobot.utils.Config;
 import com.vegazsdev.bobobot.utils.FileTools;
-import com.vegazsdev.bobobot.utils.GDrive;
 import com.vegazsdev.bobobot.utils.JSONs;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -18,9 +15,9 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.text.SimpleDateFormat;
-import java.time.ZonedDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 public class ErfanGSIs extends Command {
@@ -33,7 +30,6 @@ public class ErfanGSIs extends Command {
     private File[] supportedGSIs9 = new File(toolPath + "roms/9").listFiles(File::isDirectory);
     private File[] supportedGSIs10 = new File(toolPath + "roms/10").listFiles(File::isDirectory);
     private File[] supportedGSIs11 = new File(toolPath + "roms/11").listFiles(File::isDirectory);
-    private String infoGSI = "";
 
     public ErfanGSIs() {
         super("jurl2gsi", "Can port gsi");
@@ -219,66 +215,6 @@ public class ErfanGSIs extends Command {
             }
 
             if (success) {
-
-                // gzip files!
-
-                fullLogs.append("\n").append("Creating gzip...");
-                bot.editMessage(fullLogs.toString(), update, id);
-
-                String[] gzipFiles = listFilesForFolder(new File("ErfanGSIs" + "/output"));
-                for (String gzipFile : gzipFiles) {
-                    new FileTools().gzipFile(gzipFile, gzipFile + ".gz");
-                }
-
-                // send to google drive
-
-                ArrayList<String> arr = new ArrayList<>();
-
-                try (Stream<Path> paths = Files.walk(Paths.get("ErfanGSIs/output/"))) {
-                    paths
-                            .filter(Files::isRegularFile)
-                            .forEach(a -> {
-                                if (!a.toString().endsWith(".img")) {
-                                    arr.add(a.toString());
-                                }
-                                if (a.toString().contains(".txt")) {
-                                    infoGSI = a.toString();
-                                }
-                            });
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                fullLogs.append("\n").append("Sending files to Google Drive...");
-                bot.editMessage(fullLogs.toString(), update, id);
-
-                GDriveGSI links = new GSIUpload().enviarGSI(gsiCmdObj.getGsi(), arr);
-
-                if (gsiCmdObj.getGsi().contains(":")) {
-                    gsiCmdObj.setGsi(gsiCmdObj.getGsi().split(":")[1]);
-                }
-
-                StringBuilder generateLinks = new StringBuilder();
-
-                if (links.getA() != null && !links.getA().trim().equals("")) {
-                    generateLinks.append("\n*Download A-Only:* [Google Drive](https://drive.google.com/uc?export=download&id=").append(links.getA()).append(")");
-                }
-                if (links.getAb() != null && !links.getAb().trim().equals("")) {
-                    generateLinks.append("\n*Download A/B:* [Google Drive](https://drive.google.com/uc?export=download&id=").append(links.getAb()).append(")");
-                }
-                if (links.getFolder() != null && !links.getFolder().trim().equals("")) {
-                    generateLinks.append("\n*View:* [Google Drive Folder](https://drive.google.com/drive/folders/").append(links.getFolder()).append(")");
-                }
-
-                String descGSI = "" + new FileTools().readFile(infoGSI).trim();
-
-                bot.sendMessage("*GSI: " + gsiCmdObj.getGsi() + "*\n\n"
-                        + "*Firmware Base: *" + "[URL](" + gsiCmdObj.getUrl() + ")"
-                        + "\n\n*Information:*\n`" + descGSI
-                        + "`\n" + generateLinks.toString()
-                        + "\n\n*Thanks to:* [Contributors List](https://github.com/yukosky/ErfanGSIs/graphs/contributors)"
-                        + "\n\n[Ported using ErfanGSIs Tool](https://github.com/yukosky/ErfanGSIs)", update);
-
                 fullLogs.append("\n").append("Finished!");
                 bot.editMessage(fullLogs.toString(), update, id);
                 FileUtils.deleteDirectory(new File(toolPath + "output"));
@@ -288,20 +224,6 @@ public class ErfanGSIs extends Command {
         } catch (Exception ex) {
             LOGGER.error(fullLogs);
         }
-    }
-
-    private static String[] listFilesForFolder(final File folder) {
-        StringBuilder paths = new StringBuilder();
-        for (final File fileEntry : Objects.requireNonNull(folder.listFiles())) {
-            if (fileEntry.isDirectory()) {
-                listFilesForFolder(fileEntry);
-            } else {
-                if (fileEntry.getName().contains(".img")) {
-                    paths.append(fileEntry.getAbsolutePath()).append("\n");
-                }
-            }
-        }
-        return paths.toString().split("\n");
     }
 
     private boolean addPortPerm(String id) {
@@ -321,56 +243,6 @@ public class ErfanGSIs extends Command {
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
             return false;
-        }
-    }
-
-}
-
-class GSIUpload {
-
-    GDriveGSI enviarGSI(String gsi, ArrayList<String> var) {
-        String rand = RandomStringUtils.randomAlphabetic(8);
-        String date = new SimpleDateFormat("dd/MM/yyyy HH:mm z").format(Calendar.getInstance().getTime());
-        try {
-            String uid = gsi + " GSI " + date + " " + rand;
-            GDrive.createGoogleFolder(null, uid);
-            List<com.google.api.services.drive.model.File> googleRootFolders = GDrive.getGoogleRootFolders();
-            String folderId = "";
-            for (com.google.api.services.drive.model.File folder : googleRootFolders) {
-                if (folder.getName().equals(uid)) {
-                    folderId = folder.getId();
-                    //System.out.println("Folder ID: " + folder.getId() + " --- Name: " + folder.getName());
-                }
-            }
-            for (String sendFile : var) {
-                String fileTrim = sendFile.split("output/")[1];
-                File uploadFile = new File(sendFile);
-                GDrive.createGoogleFile(folderId, "application/gzip", fileTrim, uploadFile);
-            }
-            String aonly = "";
-            String ab = "";
-            List<com.google.api.services.drive.model.File> arquivosNaPasta = GDrive.showFiles(folderId);
-            for (com.google.api.services.drive.model.File f : arquivosNaPasta) {
-                if (!f.getName().contains(".txt")) {
-                    if (f.getName().contains("Aonly")) {
-                        aonly = f.getId();
-                    } else if (f.getName().contains("AB")) {
-                        ab = f.getId();
-                    }
-                }
-            }
-            GDriveGSI links = new GDriveGSI();
-            if (ab != null && !ab.trim().equals("")) {
-                links.setAb(ab);
-            }
-            if (aonly != null && !aonly.trim().equals("")) {
-                links.setA(aonly);
-            }
-            links.setFolder(folderId);
-            GDrive.createPublicPermission(folderId);
-            return links;
-        } catch (Exception e) {
-            return null;
         }
     }
 
@@ -416,39 +288,5 @@ class GSICmdObj {
 
     public void setUpdate(Update update) {
         this.update = update;
-    }
-}
-
-class GDriveGSI {
-
-    private String ab;
-    private String a;
-    private String folder;
-
-    GDriveGSI() {
-    }
-
-    String getAb() {
-        return ab;
-    }
-
-    void setAb(String ab) {
-        this.ab = ab;
-    }
-
-    String getA() {
-        return a;
-    }
-
-    void setA(String a) {
-        this.a = a;
-    }
-
-    String getFolder() {
-        return folder;
-    }
-
-    void setFolder(String folder) {
-        this.folder = folder;
     }
 }
