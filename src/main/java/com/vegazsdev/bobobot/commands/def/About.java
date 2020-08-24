@@ -24,6 +24,7 @@ public class About extends Command {
                         "[Google Drive API](https://developers.google.com/drive)\n" +
                         "[Google Guava](https://github.com/google/guava)\n" +
                         "[SQLite JDBC Driver (by xerial)](https://github.com/xerial/sqlite-jdbc)" +
+                        "[*Rinne Berlinetta* (Base: *bo³+t Bot*)](https://github.com/yukosky/Bot3)" +
                         "", update);
     }
 }

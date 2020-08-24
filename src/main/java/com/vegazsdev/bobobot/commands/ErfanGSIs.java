@@ -32,6 +32,7 @@ public class ErfanGSIs extends Command {
     private final String toolPath = "ErfanGSIs/";
     private File[] supportedGSIs9 = new File(toolPath + "roms/9").listFiles(File::isDirectory);
     private File[] supportedGSIs10 = new File(toolPath + "roms/10").listFiles(File::isDirectory);
+    private File[] supportedGSIs11 = new File(toolPath + "roms/11").listFiles(File::isDirectory);
     private String infoGSI = "";
 
     public ErfanGSIs() {
@@ -164,7 +165,7 @@ public class ErfanGSIs extends Command {
     }
 
     private boolean isGSIValid(String gsi) {
-        File[] supportedGSIs = ArrayUtils.addAll(supportedGSIs9, supportedGSIs10);
+        File[] supportedGSIs = ArrayUtils.addAll(supportedGSIs9, supportedGSIs10, supportedGSIs11);
         try {
             String gsi2 = null;
             if (gsi.contains(":")) {
@@ -291,8 +292,8 @@ public class ErfanGSIs extends Command {
                         + "*Firmware Base: *" + "[URL](" + gsiCmdObj.getUrl() + ")"
                         + "\n\n*Information:*\n`" + descGSI
                         + "`\n" + generateLinks.toString()
-                        + "\n\n*Thanks to:* [Contributors List](https://github.com/erfanoabdi/ErfanGSIs/graphs/contributors)"
-                        + "\n\n[Ported using ErfanGSIs Tool](https://github.com/erfanoabdi/ErfanGSIs)", update);
+                        + "\n\n*Thanks to:* [Contributors List](https://github.com/yukosky/ErfanGSIs/graphs/contributors)"
+                        + "\n\n[Ported using ErfanGSIs Tool](https://github.com/yukosky/ErfanGSIs)", update);
 
                 fullLogs.append("\n").append("Finished!");
                 bot.editMessage(fullLogs.toString(), update, id);
