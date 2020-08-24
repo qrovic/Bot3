@@ -117,7 +117,12 @@ public class ErfanGSIs extends Command {
                                 .replace("%2",
                                         Arrays.toString(supportedGSIs10).replace(toolPath + "roms/10/", "")
                                                 .replace("[", "")
+                                                .replace("]", ""))
+                                .replace("%3",
+                                        Arrays.toString(supportedGSIs11).replace(toolPath + "roms/11/", "")
+                                                .replace("[", "")
                                                 .replace("]", "")), update);
+
                     }
                 }
 
@@ -165,7 +170,7 @@ public class ErfanGSIs extends Command {
     }
 
     private boolean isGSIValid(String gsi) {
-        File[] supportedGSIs = ArrayUtils.addAll(supportedGSIs9, supportedGSIs10, supportedGSIs11);
+        File[] supportedGSIs = (File[]) ArrayUtils.addAll(supportedGSIs9, supportedGSIs10, supportedGSIs11);
         try {
             String gsi2 = null;
             if (gsi.contains(":")) {
