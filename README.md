@@ -15,9 +15,7 @@ Other Commands:
 
  - Hello: Says a Hello! (!hello)
  - Chat2Shell: Run shell commands on host computer via chat (!shell)
- - SetupGDrive: Setup your Google Drive Account to send files (!setupgdrive)
- - Download2GDrive: Download any directlink and send to your Google Drive (!d2gdrive)
- - ErfanGSIs: Can port GSIs using [ErfanGSIs Tool](https://github.com/erfanoabdi/ErfanGSIs) (!jurl2gsi)
+ - ErfanGSIs: Can port GSIs using [ErfanGSIs Tool](https://github.com/GSI-Therapy/ErfanGSIs-VelanGSIs) (!jurl2gsi) (VelanGSIs type)
  
 *More commands will be added in future, any suggestion or contributions are welcome :)*
 
@@ -79,10 +77,6 @@ This is just mine "personal" bot for telegram haha
 [Apache Log4j 2 (API/Core)](https://logging.apache.org/log4j/)
 
 [Google API Client](https://developers.google.com/api-client-library)
-
-[Google OAuth Client](https://developers.google.com/api-client-library/java/google-oauth-java-client)
-
-[Google Drive API](https://developers.google.com/drive)
 
 [Google Guava](https://github.com/google/guava)
 

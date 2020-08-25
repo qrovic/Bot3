@@ -3,7 +3,7 @@ plugins {
 }
 
 group 'com.vegazsdev.bobobot'
-version '1.0.0'
+version '1.0.1-Release'
 
 sourceCompatibility = 1.8
 
@@ -15,7 +15,6 @@ dependencies {
     compile group: 'org.telegram', name: 'telegrambots', version: '4.4.0.1'
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
     compile group: 'com.google.api-client', name: 'google-api-client', version: '1.30.5'
-    compile group: 'com.google.oauth-client', name: 'google-oauth-client-jetty', version: '1.30.4'
     compile group: 'com.google.apis', name: 'google-api-services-drive', version: 'v3-rev173-1.25.0'
     compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.12.1'
     compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.12.1'

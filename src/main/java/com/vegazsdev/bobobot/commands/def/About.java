@@ -20,11 +20,9 @@ public class About extends Command {
                         "[Apache Commons](https://commons.apache.org/)\n" +
                         "[Apache Log4j 2 (API/Core)](https://logging.apache.org/log4j/)\n" +
                         "[Google API Client](https://developers.google.com/api-client-library)\n" +
-                        "[Google OAuth Client](https://developers.google.com/api-client-library/java/google-oauth-java-client)\n" +
-                        "[Google Drive API](https://developers.google.com/drive)\n" +
                         "[Google Guava](https://github.com/google/guava)\n" +
                         "[SQLite JDBC Driver (by xerial)](https://github.com/xerial/sqlite-jdbc)\n" +
-                        "[Rinne Berlinetta (Base: bo³+t Bot)](https://github.com/yukosky/Bot3)" +
+                        "[Rinne Berlinetta (Base: bo³+t Bot)](https://github.com/GSI-Therapy/Bot3)" +
                         "", update);
     }
 }
