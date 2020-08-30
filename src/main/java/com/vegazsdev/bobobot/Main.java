@@ -84,7 +84,7 @@ public class Main {
             DbThings.createTable("prefs.db",
                     "CREATE TABLE IF NOT EXISTS chat_prefs ("
                             + "group_id real UNIQUE PRIMARY KEY,"
-                            + "hotkey text DEFAULT '!',"
+                            + "hotkey text DEFAULT '/',"
                             + "lang text DEFAULT 'strings-en.xml'"
                             + ");");
         }
