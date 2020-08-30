@@ -32,7 +32,7 @@ public class ErfanGSIs extends Command {
     private File[] supportedGSIs11 = new File(toolPath + "roms/11").listFiles(File::isDirectory);
 
     public ErfanGSIs() {
-        super("url2gsi", "Can port gsi");
+        super("url2gsi", "usage: /url2gsi <link> <firmware type>");
     }
 
     @Override
@@ -125,7 +125,7 @@ public class ErfanGSIs extends Command {
 
             } else {
                 // no perm
-                bot.sendMessage("No Permissions", update);
+                bot.sendMessage("You don't have the permission", update);
             }
 
         }
