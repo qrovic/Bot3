@@ -21,7 +21,7 @@ jobs:
     - name: Build with Gradle
       run: | 
           ./gradlew build
-          ls jar-output
+          ls 
     - name: Upload the output
       run: |
           cd jar-output
