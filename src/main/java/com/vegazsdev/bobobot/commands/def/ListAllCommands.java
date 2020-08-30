@@ -8,7 +8,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 public class ListAllCommands extends Command {
 
     public ListAllCommands() {
-        super("cmds", "Show all available commands");
+        super("cmds", "Shows all available commands");
     }
 
     @Override
