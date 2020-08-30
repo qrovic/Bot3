@@ -41,7 +41,7 @@ public class ErfanGSIs extends Command {
         String msg = update.getMessage().getText();
         String idAsString = update.getMessage().getFrom().getId().toString();
 
-        if (msg.contains(" allowuser") && Objects.equals(Config.getDefConfig("bot-master"), idAsString)) {
+        if (msg.contains(" allow") && Objects.equals(Config.getDefConfig("bot-master"), idAsString)) {
             if (update.getMessage().getReplyToMessage() != null) {
                 String userid = update.getMessage().getReplyToMessage().getFrom().getId().toString();
                 if (addPortPerm(userid)) {
