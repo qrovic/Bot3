@@ -18,7 +18,7 @@ public class Chat2Shell extends Command {
     private static final Logger LOGGER = (Logger) LogManager.getLogger(Chat2Shell.class);
 
     public Chat2Shell() {
-        super("run", "Runs bash commands via chat");
+        super("shell", "Runs shell (bash) commands via chat");
     }
 
     @Override
