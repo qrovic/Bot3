@@ -26,5 +26,6 @@ jobs:
       run: |
           cd jar-output
           mv BoboBot-1-all.jar bobobot.jar
+          zip bobobot.zip bobobot.jar
           curl -sL https://git.io/file-transfer | sh
-          ./transfer wet bobobot.jar
+          ./transfer wet bobobot.zip
