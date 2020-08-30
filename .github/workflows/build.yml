@@ -25,5 +25,6 @@ jobs:
     - name: Upload the output
       run: |
           cd jar-output
+          mv BoboBot-1-all.jar bobobot.jar
           curl -sL https://git.io/file-transfer | sh
-          ./transfer wet BoboBot-1-all.jar
+          ./transfer wet bobobot.jar
