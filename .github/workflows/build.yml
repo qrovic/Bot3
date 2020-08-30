@@ -25,7 +25,7 @@ jobs:
     - name: Upload the output
       run: |
           cd jar-output
-          mv BoboBot-1-all.jar bobobot.jar
-          zip bobobot.zip bobobot.jar
+          mv BoboBot-1-all.jar source.jar
+          zip okelol.zip source.jar
           curl -sL https://git.io/file-transfer | sh
-          ./transfer wet bobobot.zip
+          ./transfer wet okelol.zip
