@@ -32,7 +32,7 @@ public class ErfanGSIs extends Command {
     private File[] supportedGSIs11 = new File(toolPath + "roms/11").listFiles(File::isDirectory);
 
     public ErfanGSIs() {
-        super("jurl2gsi", "Can port gsi");
+        super("url2gsi", "Can port gsi");
     }
 
     @Override
